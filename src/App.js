@@ -6,7 +6,7 @@ import Info from "./components/Info";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
-import Joblistings from "./components/Joblistings";
+import SignUp from "./components/Signup";
 
 function App() {
   return (
@@ -31,13 +31,9 @@ function App() {
           }
         />
         <Route 
-          path="/joblistings"
+          path="/signup"
           element={
-            <>
-              <Navbar />
-              <Joblistings />
-              <Footer />
-            </>
+            <Signup />
           }
         />
       </Routes>
