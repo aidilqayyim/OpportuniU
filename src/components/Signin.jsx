@@ -38,7 +38,7 @@ const SignIn = () => {
                 <input 
                   type="email" 
                   placeholder="Enter your email address" 
-                  className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                  className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
                 />
               </div>
               
@@ -50,7 +50,7 @@ const SignIn = () => {
                 <input 
                   type="password" 
                   placeholder="Enter your password" 
-                  className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                  className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
                 />
               </div>
               
