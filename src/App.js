@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Info from "./components/Info";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
+import SignIn from "./components/Signin";
 
 function App() {
   return (
@@ -20,6 +21,12 @@ function App() {
               <Cards />
               <Footer />
             </>
+          }
+        />
+        <Route 
+          path="/signin"
+          element={
+            <SignIn />
           }
         />
       </Routes>

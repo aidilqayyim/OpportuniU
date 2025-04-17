@@ -10,9 +10,9 @@ const Footer = () => {
           <h1 className='text-[#373354] font-bold text-2xl'>
             Opportuni<span className='text-[#ffa500] text-3xl'>U</span>
           </h1>
-          <button className='text-white bg-[#56bb7c] px-6 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200 mt-3'>
+          <a href='/signin' className='text-white bg-[#56bb7c] px-6 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200 mt-3'>
             Log In
-          </button>
+          </a>
         </div>
 
         <div className='flex flex-col'>
