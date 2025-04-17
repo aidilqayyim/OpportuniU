@@ -79,7 +79,7 @@ const SignIn = () => {
             
             <div className="mt-4 text-center text-sm">
               <span className="text-gray-600">Already have an account? </span>
-              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signup">Sign In</Link></button>
+              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signin">Sign In</Link></button>
             </div>
           </div>
         </div>
