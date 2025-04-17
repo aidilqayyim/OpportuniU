@@ -1,7 +1,11 @@
 {
   "name": "opportuniu",
   "version": "0.1.0",
+<<<<<<< HEAD
   "homepage": ".",
+=======
+  "homepage": "https://github.com/aidilqayyim/OpportuniU.git",
+>>>>>>> 9c87ee4c74e7620e694e015e7ce163d5b7d65336
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
