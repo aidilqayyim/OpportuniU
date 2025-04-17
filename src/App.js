@@ -7,7 +7,7 @@ import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
 import Joblistings from "./components/Joblistings";
-import SignUp from "./components/SignUp";
+
 
 function App() {
   return (
@@ -32,6 +32,16 @@ function App() {
           }
         />
       </Routes>
+      <Route 
+        path="/joblistings"
+        element={
+          <>
+            <Navbar />
+            <Joblistings />
+            <Footer />
+          </>
+        }
+      />
     </Router>
   );
 }
