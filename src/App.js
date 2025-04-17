@@ -6,6 +6,7 @@ import Info from "./components/Info";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
+import Joblistings from "./components/Joblistings";
 
 function App() {
   return (
@@ -27,6 +28,16 @@ function App() {
           path="/signin"
           element={
             <SignIn />
+          }
+        />
+        <Route 
+          path="/joblistings"
+          element={
+            <>
+              <Navbar />
+              <Joblistings />
+              <Footer />
+            </>
           }
         />
       </Routes>

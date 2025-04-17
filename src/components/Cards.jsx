@@ -25,7 +25,7 @@ const Cards = () => {
           ))}
         </div>
         <div className='flex w-full h-auto items-center justify-center'>
-          <button className='h-10 sm:h-12 bg-transparent rounded-md px-4  hover:bg-[#56bb7c] hover:text-white text-[#56bb7c] border-[#56bb7c] border-2 duration-200 flex items-center justify-center gap-x-2 mt-10 font-medium'>Browse more<span className='text-lg'><FaArrowRight /></span></button>
+          <a href="/joblistings" className='h-10 sm:h-12 bg-transparent rounded-md px-4  hover:bg-[#56bb7c] hover:text-white text-[#56bb7c] border-[#56bb7c] border-2 duration-200 flex items-center justify-center gap-x-2 mt-10 font-medium'>Browse more<span className='text-lg'><FaArrowRight /></span></a>
         </div>
       </div>
     </div>
