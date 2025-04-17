@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/aidilqayyim/OpportuniU.git/static/css/main.68c35336.css",
+    "main.js": "/aidilqayyim/OpportuniU.git/static/js/main.89851257.js",
+    "static/media/model.png": "/aidilqayyim/OpportuniU.git/static/media/model.e02242c9d3e59fa7a3f6.png",
+    "static/media/model2.jpg": "/aidilqayyim/OpportuniU.git/static/media/model2.ae9e9b75dd092fe559e3.jpg",
+    "index.html": "/aidilqayyim/OpportuniU.git/index.html",
+    "main.68c35336.css.map": "/aidilqayyim/OpportuniU.git/static/css/main.68c35336.css.map",
+    "main.89851257.js.map": "/aidilqayyim/OpportuniU.git/static/js/main.89851257.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.68c35336.css",
+    "static/js/main.89851257.js"
+  ]
+}
