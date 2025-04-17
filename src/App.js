@@ -6,7 +6,7 @@ import Info from "./components/Info";
 import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
-import Signup from "./components/Signup";
+import Signup from "./components/SignUp";
 
 
 function App() {
