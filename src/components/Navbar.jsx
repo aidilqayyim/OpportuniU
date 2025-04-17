@@ -19,15 +19,9 @@ const Navbar = () => {
         <li className='hover:cursor-pointer hover:text-black duration-200'>Apply Now</li>
         <li className='hover:cursor-pointer hover:text-black duration-200'>About Us</li>
         <li>
-<<<<<<< HEAD
           <a href='/signin' className='text-white bg-[#56bb7c] px-8 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200'>
             Log In
           </a>
-=======
-          <button className='text-white bg-[#56bb7c] px-8 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200'>
-            Log In
-          </button>
->>>>>>> 9c87ee4c74e7620e694e015e7ce163d5b7d65336
         </li>
       </ul>
 
