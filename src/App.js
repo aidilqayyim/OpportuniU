@@ -7,6 +7,7 @@ import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
 import Signup from "./components/SignUp";
+import Joblistings from "./components/Joblistings"
 
 
 function App() {
@@ -37,8 +38,7 @@ function App() {
             <Signup />
           }
         />
-      </Routes>
-      <Route 
+        <Route 
         path="/joblistings"
         element={
           <>
@@ -48,6 +48,7 @@ function App() {
           </>
         }
       />
+      </Routes>
     </Router>
   );
 }
