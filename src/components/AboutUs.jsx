@@ -7,7 +7,7 @@ const AboutUs = () => {
     <div className='flex flex-col text-center items-center justify-center px-[300px] py-[150px] w-full'>
         {/*image section*/}
         <div 
-            className='absolute inset-0 bg-cover bg-center z-[-1] opacity-60'
+            className='absolute inset-0 bg-cover bg-center z-[-1] opacity-60 pb-[800px]'
             style={{ backgroundImage: `url(${model3})` }}
         />  
         
