@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import SignIn from "./components/Signin";
 import Signup from "./components/SignUp";
 import Joblistings from "./components/Joblistings"
+import AboutUs from "./components/AboutUs";
 
 function App() {
   return (
@@ -43,6 +44,16 @@ function App() {
           <>
             <Navbar />
             <Joblistings />
+            <Footer />
+          </>
+        }
+        />
+        <Route 
+        path="/aboutus"
+        element={
+          <>
+            <Navbar />
+            <AboutUs />
             <Footer />
           </>
         }
