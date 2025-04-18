@@ -9,7 +9,6 @@ import SignIn from "./components/Signin";
 import Signup from "./components/SignUp";
 import Joblistings from "./components/Joblistings"
 
-
 function App() {
   return (
     <Router>
@@ -47,7 +46,7 @@ function App() {
             <Footer />
           </>
         }
-      />
+        />
       </Routes>
     </Router>
   );
