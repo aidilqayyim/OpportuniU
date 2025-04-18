@@ -13,7 +13,7 @@ body {
 
 .card-desc {
     display: -webkit-box;
-    max-width: 300px;
+    max-width: 1000px;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
