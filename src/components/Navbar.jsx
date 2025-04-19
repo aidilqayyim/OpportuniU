@@ -25,7 +25,7 @@ const Navbar = () => {
     e.preventDefault();
     try {
       await signOut();
-      navigate('/signin')
+      navigate('/')
     } catch (err) {
       console.error(err);
     }
@@ -43,7 +43,7 @@ const Navbar = () => {
       <ul className='hidden md:flex sm:gap-x-8 gap-x-8 text-sm items-center text-[#545859]'>
         <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/'>Home</Link></li>
         <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/joblistings'>Apply Now</Link></li>
-        <li className='hover:cursor-pointer hover:text-black duration-200'>About Us</li>
+        <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/aboutus'>About Us</Link></li>
         {session ? (
           <li className="relative">
             <button
@@ -86,13 +86,30 @@ const Navbar = () => {
           Opportuni<span className='text-[#ffa500] text-3xl'>U</span>
         </h1>
         <ul className='flex flex-col gap-y-6 text-[#545859] text-base'>
+        <li className="relative">
+          <button
+            onClick={handleClick}
+            className={`text-[#373354] rounded-[4px] hover:underline duration-200 items-center justify-center gap-x-2 nav-dropdown block ${!session ? 'hidden' : ''}`}>
+            <Link to="/profile">
+              {session?.user?.user_metadata?.fullname}
+            </Link>
+          </button>
+        </li>
           <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/'>Home</Link></li>
           <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/joblistings'>Apply Now</Link></li>
-          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/aboutus'>About Us</Link></li>
+          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200 mb-2'><Link to='/aboutus'>About Us</Link></li>
           <li>
-            <button className='mt-4 text-white bg-[#56bb7c] px-6 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200 w-full'>
-              Log In
-            </button>
+            {session ? (
+              <button onClick={handleSignOut} >
+                <Link to='/signin' className={`text-white bg-[#FF5B5B] px-8 py-2 rounded-[4px] hover:bg-[#DB0000] duration-200`}>
+                  Sign Out
+                </Link>
+              </button>
+            ) : (
+              <Link to='/signin' className='text-white bg-[#56bb7c] px-8 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200'>
+                Log In
+              </Link>
+            )}
           </li>
         </ul>
       </div>
