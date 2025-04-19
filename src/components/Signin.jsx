@@ -9,6 +9,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('')
   const [loading, setLoading] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   
   const {session, signInUser} = UserAuth();
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ const SignIn = () => {
         setLoading(false)
       }
     };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div>
@@ -79,12 +84,21 @@ const SignIn = () => {
                   <label className="block text-sm font-medium text-gray-700">Password</label>
                   <button className="text-xs font-medium text-purple-600 hover:text-purple-500">Forgot Password?</button>
                 </div>
-                <input 
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password" 
-                  placeholder="Enter your password" 
-                  className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
-                />
+                <div className="relative">
+                  <input 
+                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Enter your password" 
+                    className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={togglePasswordVisibility} 
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
               </div>
               
               <div className="pt-2">
