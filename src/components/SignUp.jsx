@@ -1,8 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import model from '../assets/bgsignin.jpg';
+import { UserAuth } from '../context/AuthContext';
 
-const SignIn = () => {
+const SignUp = () => {
+  const [fullname, setName] = useState('')
+  const [tel, setTel] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState('')
+
+  const {session, signUpNewUser} = UserAuth();
+  const navigate = useNavigate();
+  console.log(session)
+
+  useEffect(() => {
+    // Only validate if both fields have values
+    if (password || confirmPassword) {
+      setPasswordsMatch(password === confirmPassword);
+    } else {
+      setPasswordsMatch(true); // Don't show error when fields are empty
+    }
+  }, [password, confirmPassword]);
+
+  const handleSignUp = async (e) => {
+    e.preventDefault()
+
+    // Check if passwords match before proceeding
+    if (!passwordsMatch) {
+      setError("Passwords don't match");
+      return;
+    }
+
+    setLoading(true)
+    try {
+      const result = await signUpNewUser(fullname, tel, email, password)
+      console.log("Sign up result:", result); // Add this to inspect the result
+
+      if(result.success) {
+        navigate('/')
+      } else {
+        // Add this to handle cases where result exists but success is false
+        setError(result.message || "Signup completed but couldn't redirect")
+      }
+    } catch (err) {
+      setError("an error occured")
+    } finally {
+      setLoading(false)
+    }
+  };
+
   return (
     <div>
       <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: `url(${model})` }}>
@@ -20,10 +70,11 @@ const SignIn = () => {
               <h2 className="text-xl font-semibold">Sign Up</h2>
             </div>
             
-            <form className="space-y-4">
-
+            <form onSubmit={handleSignUp} className="space-y-4">
+              {error && <p className='text-[#ff0000] text-center mt-4 text-sm'>{error}</p>}
                 <div>
-                    <input 
+                    <input
+                    onChange={(e) => setName(e.target.value)} 
                      type="Name" 
                     placeholder="Full Name" 
                     className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
@@ -31,6 +82,15 @@ const SignIn = () => {
                 </div>
                 <div>
                     <input 
+                    onChange={(e) => setTel(e.target.value)}
+                     type="tel" 
+                    placeholder="Phone Number" 
+                    className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
+                    />
+                </div>
+                <div>
+                    <input
+                    onChange={(e) => setEmail(e.target.value)}
                     type="email" 
                     placeholder="Email" 
                     className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
@@ -38,28 +98,31 @@ const SignIn = () => {
                 </div>
                 <div>
                     <input 
-                     type="tel" 
-                    placeholder="Phone Number" 
-                    className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
-                    />
-                </div>
-                <div>
-                    <input 
-                     type="password" 
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password" 
                     placeholder="Password" 
                     className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
                     />
                 </div>
                 <div>
-                    <input 
+                    <input
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                      type="password" 
                      placeholder="Confirm Password" 
                      className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
                     />
                 </div>
+                <div className='flex items-center mt-2'>
+                    <input
+                     type='checkbox'
+                     id='remember'
+                     className='mr-2'
+                     />
+                     <label htmlFor="remember" className="text-sm text-gray-700">Remember Me</label>
+                </div>
                 <div className="pt-2">
                     <button 
-                    type="submit" 
+                    type="submit" disabled={loading}
                     className="w-full rounded-md bg-[#56bb7c] py-3 text-sm font-medium text-white hover:bg-[#3E9B61] duration-200"
                     >
                     Sign Up
@@ -79,4 +142,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default SignUp
