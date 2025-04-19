@@ -54,8 +54,8 @@ const Profile = () => {
 
         {/* Description Section */}
         <div className='bg-white shadow rounded-lg mb-6 p-6'>
-            <div className='flex justify-between items-center mb-4'>
-                <h2 className='text-xl font-bold text-gray-800 mb-4'>Description</h2>
+            <div className='flex justify-between items-center mb-5'>
+                <h2 className='text-xl font-bold text-gray-800'>Description</h2>
                     <button className='text-blue-600 hover:text-blue-800 '>
                         Edit Description
                     </button>
