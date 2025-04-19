@@ -10,7 +10,7 @@ import Signup from "./components/SignUp";
 import Joblistings from "./components/Joblistings"
 import AboutUs from "./components/AboutUs";
 import Profile from "./components/Profile";
-import Postsignin from "./components/Postsignin";
+import Postsignup from "./components/Postsignup";
 
 function App() {
   return (
@@ -73,7 +73,7 @@ function App() {
         <Route
         path="/postsignin"
         element={
-          <Postsignin />
+          <Postsignup />
         }
         />
       </Routes>

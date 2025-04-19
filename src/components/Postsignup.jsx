@@ -4,7 +4,7 @@ import model from '../assets/bgsignin.jpg'
 import { FaUser, FaGraduationCap, FaBook, FaPen } from 'react-icons/fa';
 import { UserAuth } from '../context/AuthContext';
 
-const Postsignin = () => {
+const Postsignup = () => {
   const { session } = UserAuth();
   const [profileImage, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -66,7 +66,7 @@ const Postsignin = () => {
     <div>
       <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: `url(${model})` }}>
         <div className="absolute inset-0 bg-[#ecf1f4]/70"></div>
-        <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full max-w-5xl px-4">
+        <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full max-w-5xl md:px-4 px-20 md:py-0 py-10">
           {/* Profile Photo Card */}
           <div className="w-full md:w-[300px] rounded-md shadow-lg h-auto bg-white flex justify-center items-center flex-col px-4 py-6 z-10 text-center">
             <h1 className="text-[#373354] font-semibold mb-6 text-lg">Upload Profile Picture</h1>
@@ -177,4 +177,4 @@ const Postsignin = () => {
   )
 }
 
-export default Postsignin
+export default Postsignup
