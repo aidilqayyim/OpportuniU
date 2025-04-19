@@ -112,14 +112,6 @@ const SignUp = () => {
                      className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
                     />
                 </div>
-                <div className='flex items-center mt-2'>
-                    <input
-                     type='checkbox'
-                     id='remember'
-                     className='mr-2'
-                     />
-                     <label htmlFor="remember" className="text-sm text-gray-700">Remember Me</label>
-                </div>
                 <div className="pt-2">
                     <button 
                     type="submit" disabled={loading}
