@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserAuth } from '../context/AuthContext';
 import { FcGoogle } from "react-icons/fc"
-import { Link } from 'react-router-dom'
 import model from '../assets/bgsignin.jpg';
 
 const SignIn = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState('')
+  
+  const {session, signInUser} = UserAuth();
+  const navigate = useNavigate();
+  console.log(session)
+  
+  const handleSignIn = async (e) => {
+    e.preventDefault()
+  
+    setLoading(true)
+    try {
+      const result = await signInUser(email, password)
+      console.log("Sign up result:", result); // Add this to inspect the result
+
+      if(result.success) {
+        navigate('/')
+      } else {
+        setError("Incorrect email or password")
+      }
+      } catch (err) {
+        setError("an error occured")
+      } finally {
+        setLoading(false)
+      }
+    };
+
   return (
     <div>
       <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: `url(${model})` }}>
@@ -32,10 +62,12 @@ const SignIn = () => {
               </div>
             </div>
             
-            <form className="space-y-4">
+            <form onSubmit={handleSignIn} className="space-y-4">
+              {error && <p className='text-[#ff0000] text-center mt-4 text-sm'>{error}</p>}
               <div>
                 <label className="block text-sm font-medium text-gray-700">Email</label>
                 <input 
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email" 
                   placeholder="Enter your email address" 
                   className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
@@ -48,6 +80,7 @@ const SignIn = () => {
                   <button className="text-xs font-medium text-purple-600 hover:text-purple-500">Forgot Password?</button>
                 </div>
                 <input 
+                  onChange={(e) => setPassword(e.target.value)}
                   type="password" 
                   placeholder="Enter your password" 
                   className="mt-1 block w-full rounded-md border border-gray-300 p-3 text-sm shadow-sm focus:border-[#3E9B61] focus:outline-none focus:ring-1 focus:ring-[#3E9B61] duration-200"
@@ -56,7 +89,7 @@ const SignIn = () => {
               
               <div className="pt-2">
                 <button 
-                  type="submit" 
+                  type="submit" disabled={loading}
                   className="w-full rounded-md bg-[#56bb7c] py-3 text-sm font-medium text-white hover:bg-[#3E9B61] duration-200"
                 >
                   LOG IN
