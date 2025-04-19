@@ -43,7 +43,7 @@ const Navbar = () => {
       <ul className='hidden md:flex sm:gap-x-8 gap-x-8 text-sm items-center text-[#545859]'>
         <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/'>Home</Link></li>
         <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/joblistings'>Apply Now</Link></li>
-        <li className='hover:cursor-pointer hover:text-black duration-200'>About Us</li>
+        <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/aboutus'>About Us</Link></li>
         {session ? (
           <li className="relative">
             <button
