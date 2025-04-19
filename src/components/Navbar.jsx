@@ -88,7 +88,7 @@ const Navbar = () => {
         <ul className='flex flex-col gap-y-6 text-[#545859] text-base'>
           <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/'>Home</Link></li>
           <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/joblistings'>Apply Now</Link></li>
-          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'>About Us</li>
+          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/aboutus'>About Us</Link></li>
           <li>
             <button className='mt-4 text-white bg-[#56bb7c] px-6 py-2 rounded-[4px] hover:bg-[#3E9B61] duration-200 w-full'>
               Log In

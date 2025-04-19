@@ -20,7 +20,7 @@ const Footer = () => {
           <div className='flex lg:flex-row text-[#373354] mt-2 lg:space-x-10 flex-col whitespace-nowrap lg:space-y-0 space-y-4'>
             <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/'>Home</Link></p>
             <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/joblistings'>Apply Now</Link></p>
-            <p className='hover:cursor-pointer hover:text-black duration-200'>About Us</p>
+            <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/aboutus'>About Us</Link></p>
           </div>
         </div>
 
