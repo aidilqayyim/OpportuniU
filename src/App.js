@@ -9,6 +9,7 @@ import SignIn from "./components/Signin";
 import Signup from "./components/SignUp";
 import Joblistings from "./components/Joblistings"
 import AboutUs from "./components/AboutUs";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -58,6 +59,16 @@ function App() {
           </>
         }
         />
+        <Route 
+        path="/profile"
+        element={
+          <>
+            <Navbar />
+            <Profile />
+            <Footer />
+          </>
+  }
+/>
       </Routes>
     </Router>
   );
