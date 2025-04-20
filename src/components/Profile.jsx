@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import { UserAuth } from '../context/AuthContext';
 import model3 from '../assets/model3.jpg';
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPen } from 'react-icons/fa';
@@ -7,6 +8,33 @@ import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPen } from 'react-icons/fa';
 const Profile = () => {
   const { session } = UserAuth();
   const user = session?.user;
+
+  // State to track user photo URL
+    const [userPhotoUrl, setUserPhotoUrl] = useState(null);
+  
+    useEffect(() => {
+      const getUserPhoto = async () => {
+        if (!session) return; // If no session, don't fetch photo
+        
+        const { data, error } = await supabase
+          .from('users') // Ensure you're using the correct table
+          .select('userphoto')
+          .eq('userid', session.user.id)
+          .single(); // Fetch single row by user ID
+  
+        if (error) {
+          console.error('Error fetching user photo:', error);
+          return;
+        }
+        
+        setUserPhotoUrl(data?.userphoto || null); // Set user photo URL or null if not found
+      };
+  
+      getUserPhoto(); // Call the function to fetch photo
+      console.log(userPhotoUrl); // Will either log the userphoto URL or null if not found
+  
+    }, [session]); // Dependency on session so it refetches when the session changes
+  
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 relative">
@@ -24,7 +52,14 @@ const Profile = () => {
             <div className="bg-white shadow rounded-lg mb-6 p-6">
             <div className="flex flex-col md:flex-row items-center md:items-start">
                 <div className="h-32 w-32 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-6xl mb-4 md:mb-0 md:mr-6">
-                <FaUser />
+                  {userPhotoUrl ? (
+                    <img
+                      src={userPhotoUrl}
+                      className="h-full w-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <FaUser />
+                  )}
                 </div>
                 <div className="text-center md:text-left flex-1">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center">
