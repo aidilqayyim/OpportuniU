@@ -46,7 +46,7 @@ const SignUp = () => {
       console.log("Sign up result:", result); // Add this to inspect the result
 
       if(result.success) {
-        navigate('/')
+        navigate('/postsignin')
       } else {
         // Add this to handle cases where result exists but success is false
         setError(result.message || "Signup completed but couldn't redirect")
