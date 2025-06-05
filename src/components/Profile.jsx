@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { UserAuth } from '../context/AuthContext';
 import model3 from '../assets/model3.jpg';
-import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPen } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaBuilding, FaPen } from 'react-icons/fa';
 
 const Profile = () => {
   const { session } = UserAuth();
@@ -33,7 +33,7 @@ const Profile = () => {
       getUserPhoto(); // Call the function to fetch photo
       console.log(userPhotoUrl); // Will either log the userphoto URL or null if not found
   
-    }, [session]); // Dependency on session so it refetches when the session changes
+    },); // Dependency on session so it refetches when the session changes
   
 
   return (
@@ -55,6 +55,7 @@ const Profile = () => {
                   {userPhotoUrl ? (
                     <img
                       src={userPhotoUrl}
+                      alt=''
                       className="h-full w-full object-cover rounded-full"
                     />
                   ) : (
@@ -73,13 +74,13 @@ const Profile = () => {
                     </button>
                 </div>
                 
-                <p className="text-gray-600 mt-1">Network Computer</p>
-                <div className="flex items-center justify-center md:justify-start mt-2 text-gray-600">
-                    <FaMapMarkerAlt className="mr-1" />
+                <p className="text-gray-600 mt-0">Network Computer</p>
+                <div className="flex items-center justify-center md:justify-start mt-3 text-gray-600">
+                    <FaBuilding  className="mr-2" />
                     <span>UPM</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start mt-2 text-gray-600">
-                    <FaEnvelope className="mr-1" />
+                    <FaEnvelope className="mr-2" />
                     <span>{user?.email || "Email not available"}</span>
                 </div>
 
