@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { FcGoogle } from "react-icons/fc"
@@ -17,8 +17,7 @@ const SignIn = () => {
   
   const handleSignIn = async (e) => {
     e.preventDefault()
-    
-
+  
     setLoading(true)
     try {
       const result = await signInUser(email, password)
