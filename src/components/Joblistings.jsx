@@ -9,6 +9,7 @@ const Joblistings = () => {
   const initialKeywords = searchParams.get('keywords') || ''; // ⬅️ get query param
 
   const [keywords, setKeywords] = useState(initialKeywords);
+  const [sortBy, setSortBy] = useState('relevance');
 
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -43,15 +44,28 @@ const Joblistings = () => {
     let query = supabase
       .from('events')
       .select('*', { count: 'exact' })
-      .order('eventdate', { ascending: false })
       .range((page - 1) * pageSize, page * pageSize - 1);
 
     if (keywords.trim() !== '') {
       query = query.ilike('eventname', `%${keywords.trim()}%`);
     }
 
-    if (type !== 'both') {
-      query = query.eq('type', type.toLowerCase());
+    // New type filtering logic
+    if (type.toLowerCase() === 'program') {
+      query = query.ilike('type', 'program');
+    } else if (type.toLowerCase() === 'job') {
+      // For job, we want to show both part-time and full-time, so use or filtering
+      query = query.or('type.ilike.part-time,type.ilike.full-time');
+    }
+    // If 'both', no filtering on type (show all)
+
+    // Sorting as before
+    if (sortBy === 'newest') {
+      query = query.order('timecreated', { ascending: false });
+    } else if (sortBy === 'oldest') {
+      query = query.order('timecreated', { ascending: true });
+    } else {
+      query = query.order('eventdate', { ascending: false });
     }
 
     const { data, error, count } = await query;
@@ -67,6 +81,13 @@ const Joblistings = () => {
 
     setLoading(false);
   };
+
+
+const handleSortClick = () => {
+  setPage(1);
+  fetchEvents();
+};
+
 
   // Fetch events on page or filter changes
   useEffect(() => {
@@ -115,8 +136,8 @@ const Joblistings = () => {
                 className="my-1 h-11 w-full px-5 pr-10 rounded-md border border-gray-300 bg-white appearance-none"
               >
                 <option value="both">Both</option>
-                <option value="program">Program</option>
-                <option value="job">Job</option>
+                <option value="Program">Program</option>
+                <option value="Job">Job</option>
               </select>
               <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
             </div>
@@ -153,10 +174,26 @@ const Joblistings = () => {
                 <div className='flex flex-col sm:flex-row justify-between gap-y-2'>
                   <p className='text-[#909596] font-medium truncate text-base sm:text-lg'>{event.location}</p>
                   <div className='flex gap-x-2 flex-wrap sm:flex-nowrap mb-2'>
-                    {event.pay ? 
-                      <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2'>
-                        RM {event.pay.toFixed(2)} a month
-                      </div> : ''
+                    { (event.type.toLowerCase() === 'part-time' || event.type.toLowerCase() === 'full-time') ? 
+                        <>
+                        {event.pay ? 
+                          <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2'>
+                            RM {event.pay}
+                          </div> : ''
+                        }
+                        </>
+                        :
+                        <>
+                        {event.merit === true ?
+                          <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2'>
+                            Merit Provided
+                          </div> 
+                          :
+                          <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2'>
+                            Merit Not Provided
+                          </div> 
+                        }
+                        </>
                     }
                     <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2'>
                       {capitalizeFirstLetter(event.type)}
@@ -181,17 +218,47 @@ const Joblistings = () => {
             <div className='w-full bg-gray-300 h-[1.2px] my-3'></div>
             <form className='flex flex-col gap-y-3'>
               <label className="inline-flex items-center space-x-2">
-                <input type="radio" name="sortby" value="relevance" className="form-radio text-blue-600" />
+                <input
+                  type="radio"
+                  name="sortby"
+                  value="relevance"
+                  className="form-radio text-blue-600"
+                  checked={sortBy === 'relevance'}
+                  onChange={(e) => setSortBy(e.target.value)}
+                />
                 <span>Relevance</span>
               </label>
               <label className="inline-flex items-center space-x-2">
-                <input type="radio" name="sortby" value="newest" className="form-radio text-blue-600" />
+                <input
+                  type="radio"
+                  name="sortby"
+                  value="newest"
+                  className="form-radio text-blue-600"
+                  checked={sortBy === 'newest'}
+                  onChange={(e) => setSortBy(e.target.value)}
+                />
                 <span>Newest</span>
               </label>
               <label className="inline-flex items-center space-x-2">
-                <input type="radio" name="sortby" value="oldest" className="form-radio text-blue-600" />
+                <input
+                  type="radio"
+                  name="sortby"
+                  value="oldest"
+                  className="form-radio text-blue-600"
+                  checked={sortBy === 'oldest'}
+                  onChange={(e) => setSortBy(e.target.value)}
+                />
                 <span>Oldest</span>
               </label>
+              <div className='w-full flex items-center justify-center'>
+                <button
+                  type="button"
+                  onClick={handleSortClick}
+                  className="mt-4 bg-[#56bb7c] text-white py-2 w-[50%] rounded-md hover:bg-[#3E9B61] duration-200"
+                >
+                  Sort
+                </button>
+              </div>
             </form>
           </div>
         </div>

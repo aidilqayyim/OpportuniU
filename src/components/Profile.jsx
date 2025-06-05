@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { UserAuth } from '../context/AuthContext';
 import model3 from '../assets/model3.jpg';
-import { FaUser, FaEnvelope, FaBuilding, FaPen } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPen } from 'react-icons/fa';
 
 const Profile = () => {
   const { session } = UserAuth();
@@ -17,7 +17,7 @@ const Profile = () => {
     userdescription: '',
   });
 
-  const [events, setEvents] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [descriptionInput, setDescriptionInput] = useState('');
@@ -42,7 +42,7 @@ const Profile = () => {
           usercourse: data.usercourse || '',
           userfaculty: data.userfaculty || '',
           userphone: data.userphone || '',
-          userdescription: data.userdesc || '',  // map from userdesc to userdescription state
+          userdescription: data.userdesc || '',
         });
         setDescriptionInput(data.userdesc || '');
       }
@@ -51,19 +51,25 @@ const Profile = () => {
     fetchData();
   }, [session, user?.id]);
 
-  // Fetch events
+  // Fetch user applications with event details
   useEffect(() => {
-    const fetchEvents = async () => {
-      const { data, error } = await supabase.from('events').select('*');
+    if (!user) return;
+
+    const fetchApplications = async () => {
+      const { data, error } = await supabase
+        .from('applications')
+        .select('applicationid, status, dateapplied, events(eventname, type)')
+        .eq('userid', user.id);
+
       if (error) {
-        console.error('Error fetching events:', error);
+        console.error('Error fetching applications:', error);
       } else {
-        setEvents(data);
+        setApplications(data || []);
       }
     };
 
-    fetchEvents();
-  }, []);
+    fetchApplications();
+  }, [user]);
 
   // Handle saving edited profile fields (course, faculty, phone)
   const handleSave = async () => {
@@ -88,7 +94,7 @@ const Profile = () => {
   const handleDescriptionSave = async () => {
     const { error } = await supabase
       .from('users')
-      .update({ userdesc: descriptionInput }) // map descriptionInput to userdesc column
+      .update({ userdesc: descriptionInput })
       .eq('userid', user.id);
 
     if (error) {
@@ -98,6 +104,17 @@ const Profile = () => {
       setMessage({ type: 'success', text: 'Description updated successfully!' });
       setIsEditingDescription(false);
     }
+  };
+
+  // Format date helper
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   };
 
   return (
@@ -236,56 +253,68 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Job Applications Section */}
+        {/* Job and Program Applications */}
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Job and Program Applications</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">NAME</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
-                    JOB/PROGRAM
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Event Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
-                    DATE APPLIED
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Type
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">STATUS</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date Applied
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {events.length === 0 ? (
+                {applications.length === 0 ? (
                   <tr>
                     <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
-                      No job applications (events) found.
+                      You have not applied to any jobs or programs yet.
                     </td>
                   </tr>
                 ) : (
-                  events.map((event, index) => (
-                    <tr key={index}>
-                      <td className="px-6 py-4 text-sm text-gray-800">{event.eventname}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{event.type}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">June 2025</td>
-                      <td className="px-6 py-4 text-sm">
-                        <span className="px-2 inline-flex text-xs rounded-full bg-yellow-100 text-yellow-800">
-                          Under Review
-                        </span>
-                      </td>
-                    </tr>
-                  ))
+                  applications.map(({ applicationid, status, dateapplied, events }) => (
+                <tr key={applicationid}>
+                  <td className="px-6 py-4 text-sm text-gray-800">{events?.eventname || 'Unknown'}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{events?.type || 'N/A'}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{formatDate(dateapplied)}</td>
+                  <td className="px-6 py-4 text-sm">
+                    {status.toLowerCase() === 'under review' && (
+                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-yellow-100 text-yellow-800">
+                        Under Review
+                      </span>
+                    )}
+                    {status.toLowerCase() === 'accepted' && (
+                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-green-100 text-green-800">
+                        Accepted
+                      </span>
+                    )}
+                    {status.toLowerCase() === 'rejected' && (
+                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-red-100 text-red-800">
+                        Rejected
+                      </span>
+                    )}
+                    {!['under review', 'accepted', 'rejected'].includes(status.toLowerCase()) && (
+                      <span>{status}</span>
+                    )}
+                  </td>
+                </tr>                  ))
                 )}
               </tbody>
             </table>
           </div>
-          <div className="mt-6">
-            <Link
-              to="/joblistings"
-              className="inline-block text-white bg-[#56bb7c] px-4 py-2 rounded hover:bg-[#3E9B61]"
-            >
-              Browse More Jobs
-            </Link>
-          </div>
         </div>
+
+        {/* Other sections omitted for brevity */}
       </div>
     </div>
   );
