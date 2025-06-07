@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FiChevronDown } from 'react-icons/fi';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 
 const Joblistings = () => {
   const [searchParams] = useSearchParams(); // ⬅️ add this

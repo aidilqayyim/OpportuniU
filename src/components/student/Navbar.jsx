@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IoMenu, IoClose } from "react-icons/io5";
 import { FiChevronDown } from 'react-icons/fi';
 import { FaUser } from 'react-icons/fa';
-import { UserAuth } from '../context/AuthContext';
-import { supabase } from '../supabaseClient';
+import { UserAuth } from '../../context/AuthContext';
+import { supabase } from '../../supabaseClient';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

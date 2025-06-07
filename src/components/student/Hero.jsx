@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import model from '../assets/model.png';
-import model2 from '../assets/model2.jpg';
+import model from '../../assets/model.png';
+import model2 from '../../assets/model2.jpg';
 import { IoSearchSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 

@@ -41,6 +41,41 @@ export const AuthContextProvider = ({ children }) => {
     return { success: true, data: authData };
   };
 
+    // Step 1.2: Try signing up the organiser via Supabase Auth
+  const signUpNewOrganiser = async (fullname, tel, email, password) => {
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          fullname: fullname,
+          tel: tel,
+        },
+      },
+    });
+
+    if (authError) {
+      console.error("Sign-up error:", authError);
+      return { success: false, message: authError.message };
+    }
+
+    // Step 2: Call your custom insert_users function
+    const { error: rpcError } = await supabase.rpc("insert_organisers", {
+      empname: fullname,
+      empphone: tel,
+      empemail: email,
+      emppass: password,
+    });
+
+    if (rpcError) {
+      console.error("RPC error:", rpcError);
+      return { success: false, message: rpcError.message };
+    }
+
+    // Everything worked, so return the success response
+    return { success: true, data: authData };
+  };
+
   // Sign in function
   const signInUser = async (email, password) => {
     try {
@@ -80,7 +115,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ session, signUpNewUser, signOut, signInUser }}>
+    <AuthContext.Provider value={{ session, signUpNewUser, signOut, signInUser, signUpNewOrganiser }}>
       {children}
     </AuthContext.Provider>
   );

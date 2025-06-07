@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserAuth } from '../context/AuthContext';
-import { FcGoogle } from "react-icons/fc"
-import model from '../assets/bgsignin.jpg';
+import { UserAuth } from '../../context/AuthContext';
+import model from '../../assets/model-org.jpg';
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
@@ -48,13 +47,12 @@ const SignIn = () => {
           <div className="p-6">
 
             <div className="mb-6 text-center">
-              <h2 className="text-xl font-semibold">Log in with</h2>
+              <h2 className="text-xl font-semibold">Log in</h2>
               
               <div className="mt-4 flex justify-center space-x-4">
-                <button className="flex h-10 w-[80%] px-4 items-center justify-center rounded-md border border-gray-300 bg-white">
-                  <FcGoogle size={20}/>
-                  <span className="text-sm font-medium ml-2">Google</span>
-                </button>
+                <Link to="/signin" className="flex h-10 w-[80%] px-4 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 duration-200">
+                  <span className="text-sm font-medium ml-2">Log in as Student</span>
+                </Link>
               </div>
               
               <div className="relative mt-6">
@@ -113,7 +111,7 @@ const SignIn = () => {
             
             <div className="mt-4 text-center text-sm">
               <span className="text-gray-600">Don't have an account? </span>
-              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signup">Sign Up</Link></button>
+              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signup/organiser">Sign Up</Link></button>
             </div>
           </div>
         </div>

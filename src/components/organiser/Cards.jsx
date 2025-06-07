@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from "react-icons/fa6";
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 
 // Helper: Capitalize first letter
 const capitalizeFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -62,19 +62,18 @@ const Cards = () => {
                   ? event.description.slice(0, 100) + '...'
                   : event.description}
               </p>
-              <a
-                href={`/jobdesc?eventid=${event.eventid}`}
-                className='mt-3 bg-[#E7F5ED] hover:bg-[#56bb7c] hover:text-white w-[80px] h-[28px] sm:w-[85px] sm:h-[30px] duration-200 rounded-sm text-[11px] sm:text-xs flex justify-center items-center text-[#2D7147] font-medium cursor-pointer text-center'
+              <div
+                className='mt-3 bg-[#E7F5ED] hover:bg-[#56bb7c] hover:text-white w-[80px] h-[28px] sm:w-[85px] sm:h-[30px] duration-200 rounded-sm text-[11px] sm:text-xs flex justify-center items-center text-[#2D7147] font-medium cursor-default text-center'
               >
                 Apply Now
-              </a>
+              </div>
             </div>
           ))}
         </div>
         <div className='flex w-full h-auto items-center justify-center'>
-          <a href="/joblistings" className='h-10 sm:h-12 bg-transparent rounded-md px-4  hover:bg-[#56bb7c] hover:text-white text-[#56bb7c] border-[#56bb7c] border-2 duration-200 flex items-center justify-center gap-x-2 mt-10 font-medium'>
-            Browse more<span className='text-lg'><FaArrowRight /></span>
-          </a>
+          <div className='h-10 sm:h-12 bg-transparent rounded-md px-4  hover:bg-[#56bb7c] hover:text-white text-[#56bb7c] border-[#56bb7c] border-2 duration-200 flex items-center justify-center gap-x-2 mt-10 font-medium cursor-default'>
+            Sign in as a student to see more!
+          </div>
         </div>
       </div>
     </div>

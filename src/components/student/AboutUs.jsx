@@ -1,5 +1,5 @@
 import React from 'react'
-import model3 from '../assets/model3.jpg';
+import model3 from '../../assets/model3.jpg';
 
 const AboutUs = () => {
   return (

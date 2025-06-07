@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { IoSearchSharp } from "react-icons/io5";
-import { UserAuth } from '../context/AuthContext';
+import { UserAuth } from '../../context/AuthContext';
 
 const Footer = () => {
   const { session, signOut } = UserAuth();

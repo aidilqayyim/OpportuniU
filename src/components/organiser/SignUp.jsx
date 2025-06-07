@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import model from '../assets/bgsignin.jpg';
-import { UserAuth } from '../context/AuthContext';
+import model from '../../assets/model-org.jpg';
+import { UserAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
   const [fullname, setName] = useState('')
@@ -15,7 +15,7 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const {session, signUpNewUser} = UserAuth();
+  const {session, signUpNewOrganiser} = UserAuth();
   const navigate = useNavigate();
   console.log(session)
 
@@ -42,11 +42,11 @@ const SignUp = () => {
 
     setLoading(true)
     try {
-      const result = await signUpNewUser(fullname, tel, email, password)
+      const result = await signUpNewOrganiser(fullname, tel, email, password)
       console.log("Sign up result:", result); // Add this to inspect the result
 
       if(result.success) {
-        navigate('/postsignin')
+        navigate('/organiser/postsignin')
       } else {
         // Add this to handle cases where result exists but success is false
         setError(result.message || "Signup completed but couldn't redirect")
@@ -151,7 +151,7 @@ const SignUp = () => {
             
             <div className="mt-4 text-center text-sm">
               <span className="text-gray-600">Already have an account? </span>
-              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signin">Sign In</Link></button>
+              <button className="font-medium text-purple-600 hover:text-purple-500"><Link to="/signin/organiser">Sign In</Link></button>
             </div>
           </div>
         </div>

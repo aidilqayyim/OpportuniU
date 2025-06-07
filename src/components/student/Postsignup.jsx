@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import model from '../assets/bgsignin.jpg'
+import model from '../../assets/bgsignin.jpg'
 import { FaUser, FaGraduationCap, FaBook, FaPen } from 'react-icons/fa';
-import { UserAuth } from '../context/AuthContext';
-import { supabase } from '../supabaseClient';
+import { UserAuth } from '../../context/AuthContext';
+import { supabase } from '../../supabaseClient';
 
 const Postsignup = () => {
   const { session } = UserAuth();

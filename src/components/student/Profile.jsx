@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
-import { UserAuth } from '../context/AuthContext';
-import model3 from '../assets/model3.jpg';
+import { supabase } from '../../supabaseClient';
+import { UserAuth } from '../../context/AuthContext';
+import model3 from '../../assets/model3.jpg';
 import { FaUser, FaEnvelope, FaMapMarkerAlt, FaPen } from 'react-icons/fa';
 
 const Profile = () => {
