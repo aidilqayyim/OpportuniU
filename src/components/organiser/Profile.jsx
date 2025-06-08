@@ -54,7 +54,7 @@ const Profile = () => {
         .from('events')
         .select('*')
         .eq('empid', user.id)
-        .order('datecreated', { ascending: false });
+        .order('timecreated', { ascending: false });
 
       if (eventsError) {
         console.error('Error fetching events:', eventsError);
@@ -127,6 +127,11 @@ const Profile = () => {
       month: 'short',
       year: 'numeric',
     });
+  };
+
+  // Handle event name click
+  const handleEventClick = (eventid) => {
+    window.location.href = `/organiser/jobdesc?eventid=${eventid}`;
   };
 
   return (
@@ -259,9 +264,16 @@ const Profile = () => {
                 ) : (
                   myEvents.map((event) => (
                     <tr key={event.eventid}>
-                      <td className="px-6 py-4 text-sm text-gray-800">{event.eventname || 'Unknown'}</td>
+                      <td className="px-6 py-4 text-sm">
+                        <button
+                          onClick={() => handleEventClick(event.eventid)}
+                          className="text-gray-800 hover:text-blue-600 cursor-pointer transition-colors duration-200"
+                        >
+                          {event.eventname || 'Unknown'}
+                        </button>
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-600">{event.type || 'N/A'}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{formatDate(event.datecreated)}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">{formatDate(event.timecreated)}</td>
                       <td className="px-6 py-4 text-sm text-gray-600">
                         <div className="flex flex-col">
                           <span className="font-medium">{event.totalApplications} Total</span>
@@ -276,7 +288,7 @@ const Profile = () => {
                             ? 'bg-yellow-100 text-yellow-800'
                             : 'bg-green-100 text-green-800'
                         }`}>
-                          {event.acceptedApplications}/{event.limit || 0}
+                          {event.acceptedApplications}/{event.totalApplications}
                         </span>
                       </td>
                     </tr>

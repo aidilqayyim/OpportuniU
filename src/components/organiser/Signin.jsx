@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
+import model from '../../assets/model-org.jpg'
 
 
 const SignIn = () => {
@@ -10,7 +11,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   
-  const {session, signInUser} = UserAuth();
+  const {session, signInOrganiser} = UserAuth();
   const navigate = useNavigate();
   console.log(session)
   
@@ -19,7 +20,7 @@ const SignIn = () => {
   
     setLoading(true)
     try {
-      const result = await signInUser(email, password)
+      const result = await signInOrganiser(email, password)
       console.log("Sign up result:", result); // Add this to inspect the result
 
       if(result.success) {
@@ -40,14 +41,14 @@ const SignIn = () => {
 
   return (
     <div>
-      <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: 'url(${model})' }}>
+      <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: `url(${model})` }}>
         <div className="absolute inset-0 bg-[#ecf1f4]/70 "></div>
 
         <div className="overflow-hidden rounded-lg relative z-10 sm:w-[400px] w-[350px] bg-white shadow-lg">
           <div className="p-6">
 
             <div className="mb-6 text-center">
-              <h2 className="text-xl font-semibold">Log in</h2>
+              <h2 className="text-xl font-semibold">Log in as Organiser</h2>
               
               <div className="mt-4 flex justify-center space-x-4">
                 <Link to="/signin" className="flex h-10 w-[80%] px-4 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-100 duration-200">

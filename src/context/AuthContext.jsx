@@ -6,15 +6,15 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(undefined);
 
-  // Step 1: Try signing up the user via Supabase Auth
+  // Sign up: User
   const signUpNewUser = async (fullname, tel, email, password) => {
     const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: email,
-      password: password,
+      email,
+      password,
       options: {
         data: {
-          fullname: fullname,
-          tel: tel,
+          fullname,
+          tel,
         },
       },
     });
@@ -24,7 +24,6 @@ export const AuthContextProvider = ({ children }) => {
       return { success: false, message: authError.message };
     }
 
-    // Step 2: Call your custom insert_users function
     const { error: rpcError } = await supabase.rpc("insert_users", {
       username: fullname,
       userphone: tel,
@@ -37,19 +36,18 @@ export const AuthContextProvider = ({ children }) => {
       return { success: false, message: rpcError.message };
     }
 
-    // Everything worked, so return the success response
     return { success: true, data: authData };
   };
 
-    // Step 1.2: Try signing up the organiser via Supabase Auth
+  // Sign up: Organiser
   const signUpNewOrganiser = async (fullname, tel, email, password) => {
     const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: email,
-      password: password,
+      email,
+      password,
       options: {
         data: {
-          fullname: fullname,
-          tel: tel,
+          fullname,
+          tel,
         },
       },
     });
@@ -59,7 +57,6 @@ export const AuthContextProvider = ({ children }) => {
       return { success: false, message: authError.message };
     }
 
-    // Step 2: Call your custom insert_users function
     const { error: rpcError } = await supabase.rpc("insert_organisers", {
       empname: fullname,
       empphone: tel,
@@ -72,30 +69,66 @@ export const AuthContextProvider = ({ children }) => {
       return { success: false, message: rpcError.message };
     }
 
-    // Everything worked, so return the success response
     return { success: true, data: authData };
   };
 
-  // Sign in function
+  // Sign in: User
   const signInUser = async (email, password) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (error) {
-        console.error("Sign-in error occurred:", error);
-        return { success: false, error: error.message };
-      }
-
-      console.log("Sign-in success:", data);
-      return { success: true, data };
-    } catch (error) {
-      console.error("An error occurred:", error);
+    if (authError) {
+      console.error("Sign-in error:", authError);
+      return { success: false, error: authError.message };
     }
+
+    const userid = authData.user.id;
+
+    const { data: userProfile, error: userError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("userid", userid)
+      .single();
+
+    if (userError || !userProfile) {
+      console.error("User not found in users table:", userError);
+      return { success: false, error: "User profile not found." };
+    }
+
+    return { success: true, data: authData };
   };
 
+  // Sign in: Organiser
+  const signInOrganiser = async (email, password) => {
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (authError) {
+      console.error("Sign-in error:", authError);
+      return { success: false, error: authError.message };
+    }
+
+    const empid = authData.user.id;
+
+    const { data: empProfile, error: empError } = await supabase
+      .from("employers")
+      .select("*")
+      .eq("empid", empid)
+      .single();
+
+    if (empError || !empProfile) {
+      console.error("Employer not found in employers table:", empError);
+      return { success: false, error: "Organiser profile not found." };
+    }
+
+    return { success: true, data: authData };
+  };
+
+  // Auth state handling
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -106,21 +139,28 @@ export const AuthContextProvider = ({ children }) => {
     });
   }, []);
 
-  // Sign out function
+  // Sign out
   const signOut = () => {
     const { error } = supabase.auth.signOut();
     if (error) {
-      console.error("There was an error:", error);
+      console.error("Sign-out error:", error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ session, signUpNewUser, signOut, signInUser, signUpNewOrganiser }}>
+    <AuthContext.Provider
+      value={{
+        session,
+        signUpNewUser,
+        signUpNewOrganiser,
+        signInUser,
+        signInOrganiser,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const UserAuth = () => {
-  return useContext(AuthContext);
-};
+export const UserAuth = () => useContext(AuthContext);

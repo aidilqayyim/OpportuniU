@@ -19,7 +19,7 @@ const Hero = () => {
             <h1 className='font-semibold lg:text-5xl md:text-4xl text-3xl text-[#373354] mt-2'>in UPM!</h1>
             <div className='w-[50%] h-14 mt-8 rounded-md px-2 py-[4px]'>
               <button
-                onClick={() => navigate('/organiser/addjobs')}
+                onClick={() => navigate('/organiser/mylistings')}
                 className='w-full h-full bg-transparent border-[#56bb7c] border-2 text-[#56bb7c] hover:text-white font-semibold rounded-md hover:bg-[#3E9B61] duration-200 text-sm flex items-center justify-center gap-2 group'
               >
                 Create Opportunities
@@ -41,7 +41,7 @@ const Hero = () => {
           <p className='font-normal text-2xl text-[#373354] mt-4'>Opportunity awaits you!</p>
           <div className='w-[80%] h-14 mt-8 rounded-md px-2 py-[4px]'>
             <button
-              onClick={() => navigate('/organiser/addjobs')}
+              onClick={() => navigate('/organiser/mylistings')}
               className='w-full h-full bg-transparent border-[#56bb7c] border-2 text-white hover:text-white font-semibold rounded-md hover:bg-[#3E9B61] duration-200 text-sm flex items-center justify-center gap-2 group'
             >
               Create Opportunities

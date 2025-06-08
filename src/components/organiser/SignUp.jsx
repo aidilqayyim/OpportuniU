@@ -80,7 +80,7 @@ const SignUp = () => {
           <div className="p-6">
 
             <div className="mb-6 text-center">
-              <h2 className="text-xl font-semibold">Sign Up</h2>
+              <h2 className="text-xl font-semibold">Sign Up as Organiser</h2>
             </div>
             
             <form onSubmit={handleSignUp} className="space-y-4">

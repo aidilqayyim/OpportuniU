@@ -26,6 +26,9 @@ import InfoOrg from "../src/components/organiser/Info";
 import CardsOrg from "../src/components/organiser/Cards";
 import ProfileOrg from "../src/components/organiser/Profile";
 import AddJobs from './components/organiser/AddJobs';
+import MyListings from './components/organiser/MyListings';
+import JobDescriptionOrg from './components/organiser/JobDescription';
+import CheckApplications from './components/organiser/CheckApplications';
 
 function App() {
   return (
@@ -40,9 +43,7 @@ function App() {
         <Route path="/signin/organiser" element={<SigninOrg />} />
         <Route path="/signup/organiser" element={<SignUpOrg />} />
         <Route path="/organiser/postsignin" element={<PostsignupOrg />} />
-        <Route path="/organiser/addjobs" element={<AddJobs />} />
         
-
 
         {/* Layout for student */}
         <Route element={<Layout />}>
@@ -70,8 +71,11 @@ function App() {
               </>
             }
           />
+          <Route path="/organiser/mylistings" element={<MyListings />} />
           <Route path="/organiser/addjobs" element={<AddJobs />} />
           <Route path="/organiser/profile" element={<ProfileOrg />} />
+          <Route path="/organiser/jobdesc" element={<JobDescriptionOrg />} />
+          <Route path="/organiser/checkapplications" element={<CheckApplications />} />
 
         </Route>
 

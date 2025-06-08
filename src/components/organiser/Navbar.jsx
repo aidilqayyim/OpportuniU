@@ -67,7 +67,7 @@ const Navbar = () => {
       {/* Desktop Nav */}
       <ul className='hidden md:flex lg:gap-x-8 gap-x-4 text-sm items-center text-[#545859]'>
         <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/'>Home</Link></li>
-        <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/addjobs'>Create Opportunities</Link></li>
+        <li className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/mylistings'>Create Opportunities</Link></li>
         {session ? (
           <li className='relative flex items-center justify-center gap-x-4'>
               <button
@@ -146,7 +146,7 @@ const Navbar = () => {
             </button>
           </li>
           <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/organiser/'>Home</Link></li>
-          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/organiser/addjobs'>Create Opportunities</Link></li>
+          <li onClick={() => setIsOpen(false)} className='hover:text-black cursor-pointer duration-200'><Link to='/organiser/mylistings'>Create Opportunities</Link></li>
           <li>
             {session ? (
               <button onClick={handleSignOut} >

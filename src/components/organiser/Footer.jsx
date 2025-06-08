@@ -42,7 +42,7 @@ const Footer = () => {
           <h1 className='font-semibold text-[#373354] whitespace-nowrap'>Quick Links</h1>
           <div className='flex lg:flex-row text-[#373354] mt-2 lg:space-x-10 flex-col whitespace-nowrap lg:space-y-0 space-y-4'>
             <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/'>Home</Link></p>
-            <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/addjobs'>Create Opportunities</Link></p>
+            <p className='hover:cursor-pointer hover:text-black duration-200'><Link to='/organiser/mylistings'>Create Opportunities</Link></p>
           </div>
         </div>
 
