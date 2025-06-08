@@ -40,6 +40,8 @@ function App() {
         <Route path="/signin/organiser" element={<SigninOrg />} />
         <Route path="/signup/organiser" element={<SignUpOrg />} />
         <Route path="/organiser/postsignin" element={<PostsignupOrg />} />
+        <Route path="/organiser/addjobs" element={<AddJobs />} />
+        
 
 
         {/* Layout for student */}

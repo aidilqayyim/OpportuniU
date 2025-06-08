@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
-import model from '../../assets/model-org.jpg';
+
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
@@ -23,7 +23,7 @@ const SignIn = () => {
       console.log("Sign up result:", result); // Add this to inspect the result
 
       if(result.success) {
-        navigate('/')
+        navigate('/organiser/')
       } else {
         setError("Incorrect email or password")
       }
@@ -40,7 +40,7 @@ const SignIn = () => {
 
   return (
     <div>
-      <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: `url(${model})` }}>
+      <div className="relative min-h-screen bg-center bg-cover flex justify-center items-center" style={{ backgroundImage: 'url(${model})' }}>
         <div className="absolute inset-0 bg-[#ecf1f4]/70 "></div>
 
         <div className="overflow-hidden rounded-lg relative z-10 sm:w-[400px] w-[350px] bg-white shadow-lg">
