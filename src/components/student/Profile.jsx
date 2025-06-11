@@ -22,7 +22,6 @@ const Profile = () => {
   const [descriptionInput, setDescriptionInput] = useState('');
   const [message, setMessage] = useState(null);
 
-  // Fetch user photo and profile data
   useEffect(() => {
     if (!session) return;
 
@@ -50,7 +49,6 @@ const Profile = () => {
     fetchData();
   }, [session, user?.id]);
 
-  // Fetch user applications with event details
   useEffect(() => {
     if (!user) return;
 
@@ -70,7 +68,6 @@ const Profile = () => {
     fetchApplications();
   }, [user]);
 
-  // Handle saving edited profile fields (course, faculty, phone)
   const handleSave = async () => {
     const { error } = await supabase
       .from('users')
@@ -89,7 +86,6 @@ const Profile = () => {
     }
   };
 
-  // Handle saving description
   const handleDescriptionSave = async () => {
     const { error } = await supabase
       .from('users')
@@ -105,7 +101,6 @@ const Profile = () => {
     }
   };
 
-  // Format date helper
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
@@ -118,12 +113,11 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center z-[-1] opacity-60"
         style={{ backgroundImage: `url(${model3})` }}
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {message && (
           <div
             className={`mb-4 p-3 rounded ${
@@ -136,62 +130,62 @@ const Profile = () => {
 
         {/* Profile Header */}
         <div className="bg-white shadow rounded-lg mb-6 p-6">
-          <div className="flex flex-col md:flex-row items-center md:items-start">
-            <div className="h-32 w-32 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-6xl mb-4 md:mb-0 md:mr-6">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start">
+            <div className="h-32 w-32 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-6xl mb-4 lg:mb-0 lg:mr-6">
               {userPhotoUrl ? (
                 <img src={userPhotoUrl} className="h-full w-full object-cover rounded-full" alt="User" />
               ) : (
                 <FaUser />
               )}
             </div>
-            <div className="text-center md:text-left flex-1">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <div className="w-full text-center lg:text-left">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
                 <h1 className="text-2xl font-bold text-gray-800">
                   {user?.user_metadata?.fullname || 'Complete your profile'}
                 </h1>
                 <button
                   onClick={() => setIsEditing(!isEditing)}
-                  className="mt-2 md:mt-0 flex items-center justify-center gap-1 text-white bg-[#56bb7c] px-4 py-2 rounded hover:bg-[#3E9B61]"
+                  className="flex items-center justify-center gap-1 text-white bg-[#56bb7c] px-4 py-2 rounded hover:bg-[#3E9B61]"
                 >
                   <FaPen className="text-sm" /> {isEditing ? 'Cancel' : 'Edit Profile'}
                 </button>
               </div>
 
-              <div className="text-gray-600 mt-2">
-                <div className="flex items-center gap-2">
+              <div className="text-gray-600 mt-4 space-y-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <span className="font-medium">Course:</span>
                   {isEditing ? (
                     <input
                       type="text"
                       value={userData.usercourse}
                       onChange={(e) => setUserData({ ...userData, usercourse: e.target.value })}
-                      className="border rounded px-2 py-1"
+                      className="border rounded px-2 py-1 w-full sm:w-auto"
                     />
                   ) : (
                     <span>{userData.usercourse || 'Not set'}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <span className="font-medium">Faculty:</span>
                   {isEditing ? (
                     <input
                       type="text"
                       value={userData.userfaculty}
                       onChange={(e) => setUserData({ ...userData, userfaculty: e.target.value })}
-                      className="border rounded px-2 py-1"
+                      className="border rounded px-2 py-1 w-full sm:w-auto"
                     />
                   ) : (
                     <span>{userData.userfaculty || 'Not set'}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <span className="font-medium">Phone:</span>
                   {isEditing ? (
                     <input
                       type="text"
                       value={userData.userphone}
                       onChange={(e) => setUserData({ ...userData, userphone: e.target.value })}
-                      className="border rounded px-2 py-1"
+                      className="border rounded px-2 py-1 w-full sm:w-auto"
                     />
                   ) : (
                     <span>{userData.userphone || 'Not set'}</span>
@@ -199,11 +193,11 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-center md:justify-start mt-3 text-gray-600">
+              <div className="flex items-center justify-center lg:justify-start mt-3 text-gray-600">
                 <FaMapMarkerAlt className="mr-1" />
                 <span>UPM</span>
               </div>
-              <div className="flex items-center justify-center md:justify-start mt-2 text-gray-600">
+              <div className="flex items-center justify-center lg:justify-start mt-2 text-gray-600">
                 <FaEnvelope className="mr-1" />
                 <span>{user?.email || 'Email not available'}</span>
               </div>
@@ -221,7 +215,7 @@ const Profile = () => {
 
         {/* Description Section */}
         <div className="bg-white shadow rounded-lg mb-6 p-6">
-          <div className="flex justify-between items-center mb-5">
+          <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-gray-800">Description</h2>
             <button
               onClick={() => setIsEditingDescription(!isEditingDescription)}
@@ -252,68 +246,57 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Job and Program Applications */}
-        <div className="bg-white shadow rounded-lg p-6">
+        {/* Applications Table */}
+        <div className="bg-white shadow rounded-lg p-6 overflow-x-auto">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Job and Program Applications</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Event Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Type
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date Applied
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Event Name</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date Applied</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {applications.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="px-4 py-4 text-center text-sm text-gray-500">
+                    You have not applied to any jobs or programs yet.
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {applications.length === 0 ? (
-                  <tr>
-                    <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
-                      You have not applied to any jobs or programs yet.
+              ) : (
+                applications.map(({ applicationid, status, dateapplied, events }) => (
+                  <tr key={applicationid}>
+                    <td className="px-4 py-2 text-sm text-gray-800">{events?.eventname || 'Unknown'}</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">{events?.type || 'N/A'}</td>
+                    <td className="px-4 py-2 text-sm text-gray-600">{formatDate(dateapplied)}</td>
+                    <td className="px-4 py-2 text-sm">
+                      {status.toLowerCase() === 'under review' && (
+                        <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-yellow-100 text-yellow-800">
+                          Under Review
+                        </span>
+                      )}
+                      {status.toLowerCase() === 'accepted' && (
+                        <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-green-100 text-green-800">
+                          Accepted
+                        </span>
+                      )}
+                      {status.toLowerCase() === 'rejected' && (
+                        <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-red-100 text-red-800">
+                          Rejected
+                        </span>
+                      )}
+                      {!['under review', 'accepted', 'rejected'].includes(status.toLowerCase()) && (
+                        <span>{status}</span>
+                      )}
                     </td>
                   </tr>
-                ) : (
-                  applications.map(({ applicationid, status, dateapplied, events }) => (
-                <tr key={applicationid}>
-                  <td className="px-6 py-4 text-sm text-gray-800">{events?.eventname || 'Unknown'}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{events?.type || 'N/A'}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{formatDate(dateapplied)}</td>
-                  <td className="px-6 py-4 text-sm">
-                    {status.toLowerCase() === 'under review' && (
-                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-yellow-100 text-yellow-800">
-                        Under Review
-                      </span>
-                    )}
-                    {status.toLowerCase() === 'accepted' && (
-                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-green-100 text-green-800">
-                        Accepted
-                      </span>
-                    )}
-                    {status.toLowerCase() === 'rejected' && (
-                      <span className="px-2 inline-flex text-xs font-semibold leading-5 rounded-full bg-red-100 text-red-800">
-                        Rejected
-                      </span>
-                    )}
-                    {!['under review', 'accepted', 'rejected'].includes(status.toLowerCase()) && (
-                      <span>{status}</span>
-                    )}
-                  </td>
-                </tr>                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-
-        {/* Other sections omitted for brevity */}
       </div>
     </div>
   );

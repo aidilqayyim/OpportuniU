@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { FaArrowRight, FaArrowLeft} from "react-icons/fa6";
 import { BsPlusCircleDotted } from "react-icons/bs";
 import { supabase } from '../../supabaseClient';
@@ -7,6 +7,7 @@ import { supabase } from '../../supabaseClient';
 const MyListings = () => {
   const [searchParams] = useSearchParams();
   const initialKeywords = searchParams.get('keywords') || '';
+  const navigate = useNavigate();
 
   const [keywords, setKeywords] = useState(initialKeywords);
   const [sortBy, setSortBy] = useState('relevance');
@@ -49,6 +50,7 @@ const MyListings = () => {
       console.error('Error getting user or not logged in:', userError);
       setEvents([]);
       setLoading(false);
+      navigate('/signin');
       return;
     }
 

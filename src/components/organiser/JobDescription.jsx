@@ -315,7 +315,7 @@ const JobDescription = () => {
                     Pay (RM)
                   </label>
                   <input 
-                    type="number" 
+                    type="text" 
                     name="pay" 
                     placeholder="Enter pay amount" 
                     value={formData.pay} 
