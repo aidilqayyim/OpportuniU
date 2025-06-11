@@ -1,15 +1,20 @@
 {
   "files": {
-    "main.css": "/aidilqayyim/OpportuniU.git/static/css/main.68c35336.css",
-    "main.js": "/aidilqayyim/OpportuniU.git/static/js/main.89851257.js",
-    "static/media/model.png": "/aidilqayyim/OpportuniU.git/static/media/model.e02242c9d3e59fa7a3f6.png",
-    "static/media/model2.jpg": "/aidilqayyim/OpportuniU.git/static/media/model2.ae9e9b75dd092fe559e3.jpg",
-    "index.html": "/aidilqayyim/OpportuniU.git/index.html",
-    "main.68c35336.css.map": "/aidilqayyim/OpportuniU.git/static/css/main.68c35336.css.map",
-    "main.89851257.js.map": "/aidilqayyim/OpportuniU.git/static/js/main.89851257.js.map"
+    "main.css": "/OpportuniU/static/css/main.d7f22707.css",
+    "main.js": "/OpportuniU/static/js/main.52c1ca77.js",
+    "static/js/198.612dac65.chunk.js": "/OpportuniU/static/js/198.612dac65.chunk.js",
+    "static/media/model.png": "/OpportuniU/static/media/model.e02242c9d3e59fa7a3f6.png",
+    "static/media/bgsignin.jpg": "/OpportuniU/static/media/bgsignin.dd7aba53060cda91869b.jpg",
+    "static/media/model3.jpg": "/OpportuniU/static/media/model3.5e3c2521785c86618e03.jpg",
+    "static/media/model-org.jpg": "/OpportuniU/static/media/model-org.4ea722b8468eca363a09.jpg",
+    "static/media/model2.jpg": "/OpportuniU/static/media/model2.ae9e9b75dd092fe559e3.jpg",
+    "index.html": "/OpportuniU/index.html",
+    "main.d7f22707.css.map": "/OpportuniU/static/css/main.d7f22707.css.map",
+    "main.52c1ca77.js.map": "/OpportuniU/static/js/main.52c1ca77.js.map",
+    "198.612dac65.chunk.js.map": "/OpportuniU/static/js/198.612dac65.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.68c35336.css",
-    "static/js/main.89851257.js"
+    "static/css/main.d7f22707.css",
+    "static/js/main.52c1ca77.js"
   ]
 }
