@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/OpportuniU/static/css/main.eaab79ac.css",
-    "main.js": "/OpportuniU/static/js/main.dc741465.js",
+    "main.css": "/OpportuniU/static/css/main.9a066e5b.css",
+    "main.js": "/OpportuniU/static/js/main.f96749c1.js",
     "static/js/198.612dac65.chunk.js": "/OpportuniU/static/js/198.612dac65.chunk.js",
     "static/media/model.png": "/OpportuniU/static/media/model.e02242c9d3e59fa7a3f6.png",
     "static/media/bgsignin.jpg": "/OpportuniU/static/media/bgsignin.dd7aba53060cda91869b.jpg",
@@ -9,12 +9,12 @@
     "static/media/model-org.jpg": "/OpportuniU/static/media/model-org.4ea722b8468eca363a09.jpg",
     "static/media/model2.jpg": "/OpportuniU/static/media/model2.ae9e9b75dd092fe559e3.jpg",
     "index.html": "/OpportuniU/index.html",
-    "main.eaab79ac.css.map": "/OpportuniU/static/css/main.eaab79ac.css.map",
-    "main.dc741465.js.map": "/OpportuniU/static/js/main.dc741465.js.map",
+    "main.9a066e5b.css.map": "/OpportuniU/static/css/main.9a066e5b.css.map",
+    "main.f96749c1.js.map": "/OpportuniU/static/js/main.f96749c1.js.map",
     "198.612dac65.chunk.js.map": "/OpportuniU/static/js/198.612dac65.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eaab79ac.css",
-    "static/js/main.dc741465.js"
+    "static/css/main.9a066e5b.css",
+    "static/js/main.f96749c1.js"
   ]
 }
