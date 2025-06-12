@@ -12,7 +12,7 @@ const Joblistings = () => {
   const [sortBy, setSortBy] = useState('relevance');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('');
+  const [type, setType] = useState('both');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 6;
@@ -35,62 +35,57 @@ const Joblistings = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  const fetchEvents = async () => {
-    setLoading(true);
+const fetchEvents = async () => {
+  setLoading(true);
 
-    try {
-      let query = supabase
-        .from('events')
-        .select('*', { count: 'exact' })
-        .range((page - 1) * pageSize, page * pageSize - 1);
+  try {
+    let query = supabase
+      .from('events')
+      .select('*', { count: 'exact' })
+      .range((page - 1) * pageSize, page * pageSize - 1);
 
-      if (keywords.trim() !== '') {
-        query = query.ilike('eventname', `%${keywords.trim()}%`);
-      }
+    if (keywords.trim() !== '') {
+      query = query.ilike('eventname', `%${keywords.trim()}%`);
+    }
 
-      const normalizedType = type.toLowerCase();
-      if (normalizedType === 'full-time') {
-        query = query.ilike('type', 'Full-Time');
-      } else if (normalizedType === 'part-time') {
-        query = query.ilike('type', 'Part-Time');
-      } else if (normalizedType === 'one-time') {
-        query = query.ilike('type', 'One-Time');
-      } else if (normalizedType === 'volunteer') {
-        query = query.ilike('type', 'Volunteer');
-      } else if (normalizedType === 'program') {
-        query = query.ilike('type', 'Program');
-      } else if (normalizedType === 'workshop') {
-        query = query.ilike('type', 'Workshop');
-      } else if (normalizedType === 'competition') {
-        query = query.ilike('type', 'Competition');
-      }
+    const normalizedType = type.toLowerCase();
+    if (
+      normalizedType &&
+      normalizedType !== 'both' &&
+      normalizedType !== 'job'
+    ) {
+      query = query.ilike('type', capitalizeFirstLetter(normalizedType));
+    } else if (normalizedType === 'job') {
+      // Show all job types
+      query = query.in('type', ['Full-Time', 'Part-Time', 'One-Time']);
+    }
 
-      if (sortBy === 'newest') {
-        query = query.order('timecreated', { ascending: false });
-      } else if (sortBy === 'oldest') {
-        query = query.order('timecreated', { ascending: true });
-      } else {
-        query = query.order('eventdate', { ascending: false });
-      }
+    if (sortBy === 'newest') {
+      query = query.order('timecreated', { ascending: false });
+    } else if (sortBy === 'oldest') {
+      query = query.order('timecreated', { ascending: true });
+    } else {
+      query = query.order('eventdate', { ascending: false });
+    }
 
-      const { data, error, count } = await query;
+    const { data, error, count } = await query;
 
-      if (error) {
-        console.error('Error fetching events:', error);
-        setEvents([]);
-        setTotalPages(1);
-      } else {
-        setEvents(data || []);
-        setTotalPages(count ? Math.ceil(count / pageSize) : 1);
-      }
-    } catch (err) {
-      console.error('Unexpected error:', err);
+    if (error) {
+      console.error('Error fetching events:', error);
       setEvents([]);
       setTotalPages(1);
-    } finally {
-      setLoading(false);
+    } else {
+      setEvents(data || []);
+      setTotalPages(count ? Math.ceil(count / pageSize) : 1);
     }
-  };
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    setEvents([]);
+    setTotalPages(1);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleSortClick = () => {
     setPage(1);
