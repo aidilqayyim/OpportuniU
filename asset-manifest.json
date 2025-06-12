@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/OpportuniU/static/css/main.9a066e5b.css",
-    "main.js": "/OpportuniU/static/js/main.a0320ff3.js",
+    "main.js": "/OpportuniU/static/js/main.b4a4fc85.js",
     "static/js/198.612dac65.chunk.js": "/OpportuniU/static/js/198.612dac65.chunk.js",
     "static/media/model.png": "/OpportuniU/static/media/model.e02242c9d3e59fa7a3f6.png",
     "static/media/bgsignin.jpg": "/OpportuniU/static/media/bgsignin.dd7aba53060cda91869b.jpg",
@@ -10,11 +10,11 @@
     "static/media/model2.jpg": "/OpportuniU/static/media/model2.ae9e9b75dd092fe559e3.jpg",
     "index.html": "/OpportuniU/index.html",
     "main.9a066e5b.css.map": "/OpportuniU/static/css/main.9a066e5b.css.map",
-    "main.a0320ff3.js.map": "/OpportuniU/static/js/main.a0320ff3.js.map",
+    "main.b4a4fc85.js.map": "/OpportuniU/static/js/main.b4a4fc85.js.map",
     "198.612dac65.chunk.js.map": "/OpportuniU/static/js/198.612dac65.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9a066e5b.css",
-    "static/js/main.a0320ff3.js"
+    "static/js/main.b4a4fc85.js"
   ]
 }
