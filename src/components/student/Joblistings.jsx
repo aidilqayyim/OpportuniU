@@ -50,13 +50,25 @@ const Joblistings = () => {
       if (keywords.trim() !== '') {
         query = query.ilike('eventname', `%${keywords.trim()}%`);
       }
+      const normalizedType = type.toLowerCase();
 
-      // Apply type filtering
-      if (type.toLowerCase() === 'program') {
-        query = query.ilike('type', 'program');
-      } else if (type.toLowerCase() === 'job') {
-        query = query.or('type.ilike.part-time,type.ilike.full-time');
+      const validTypes = ['full-time', 'part-time', 'one-time', 'volunteer', 'program', 'workshop', 'competition'];
+
+      if (validTypes.includes(normalizedType)) {
+        if (normalizedType === 'program') {
+          query = query.ilike('type', 'program');
+        } else {
+          query = query.or(
+            'type.ilike.Full-Time,' +
+            'type.ilike.Part-Time,' +
+            'type.ilike.One-Time,' +
+            'type.ilike.Volunteer,' +
+            'type.ilike.Workshop,' +
+            'type.ilike.Competition'
+          );
+        }
       }
+
       // If 'both', no filtering on type (show all)
 
       // Apply sorting
