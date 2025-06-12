@@ -32,7 +32,7 @@ import CheckApplications from './components/organiser/CheckApplications';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/OpportuniU">      
       <Routes>
         {/* Student part */}
         <Route path="/signin" element={<SignIn />} />
