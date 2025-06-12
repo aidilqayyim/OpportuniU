@@ -12,7 +12,7 @@ const Joblistings = () => {
   const [sortBy, setSortBy] = useState('relevance');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('both');
+  const [type, setType] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 6;
