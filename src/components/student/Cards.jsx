@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from "react-icons/fa6";
 import { supabase } from '../../supabaseClient';
+import { Link } from 'react-router-dom';
 
 // Helper: Capitalize first letter
 const capitalizeFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1);
