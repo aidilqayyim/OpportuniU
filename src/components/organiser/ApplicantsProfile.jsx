@@ -67,23 +67,6 @@ const Profile = () => {
     if (userid) fetchApplications();
   }, [userid]);
 
-  const handleDescriptionSave = async () => {
-    const { error } = await supabase
-      .from('users')
-      .update({ userdesc: descriptionInput })
-      .eq('userid', userid);
-
-    if (error) {
-      setMessage({ type: 'error', text: 'Failed to update description.' });
-    } else {
-      setUserData(prev => ({ ...prev, userdescription: descriptionInput }));
-      setMessage({ type: 'success', text: 'Description updated successfully.' });
-      setIsEditingDescription(false);
-    }
-
-    setTimeout(() => setMessage(null), 3000);
-  };
-
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
@@ -151,12 +134,6 @@ const Profile = () => {
         <div className="bg-white shadow rounded-lg mb-6 p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-gray-800">Description</h2>
-            <button
-              onClick={() => setIsEditingDescription(!isEditingDescription)}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              {isEditingDescription ? 'Cancel' : 'Edit Description'}
-            </button>
           </div>
           <div className="text-gray-700">
             {isEditingDescription ? (
