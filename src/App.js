@@ -29,6 +29,7 @@ import AddJobs from './components/organiser/AddJobs';
 import MyListings from './components/organiser/MyListings';
 import JobDescriptionOrg from './components/organiser/JobDescription';
 import CheckApplications from './components/organiser/CheckApplications';
+import ApplicantsProfile from './components/organiser/ApplicantsProfile';
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
           <Route path="/organiser/profile" element={<ProfileOrg />} />
           <Route path="/organiser/jobdesc" element={<JobDescriptionOrg />} />
           <Route path="/organiser/checkapplications" element={<CheckApplications />} />
+          <Route path="/organiser/applicantsprofile" element={<ApplicantsProfile />} />
 
         </Route>
 

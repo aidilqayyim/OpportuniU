@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { supabase } from '../../supabaseClient';
 
@@ -29,7 +29,6 @@ const CheckApplications = () => {
         return;
       }
 
-      // Fetch event details
       const { data: eventData, error: eventError } = await supabase
         .from('events')
         .select('*, employers(*)')
@@ -44,7 +43,6 @@ const CheckApplications = () => {
 
       setEvent(eventData);
 
-      // Fetch applications with user details
       const { data: applicationsData, error: applicationsError } = await supabase
         .from('applications')
         .select(`
@@ -86,7 +84,6 @@ const CheckApplications = () => {
         throw error;
       }
 
-      // Update local state
       setApplications(prev => 
         prev.map(app => 
           app.applicationid === applicationId 
@@ -161,7 +158,6 @@ const CheckApplications = () => {
       );
     }
 
-    // Under review or other statuses
     return (
       <div className="flex gap-2">
         <button
@@ -200,7 +196,6 @@ const CheckApplications = () => {
 
   return (
     <div className='w-full h-auto lg:px-40 md:px-20 sm:px-10 px-4 py-24 bg-white'>
-      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className='text-[#373354] font-semibold text-3xl'>Event Applications</h1>
@@ -213,7 +208,6 @@ const CheckApplications = () => {
 
       <div className='w-full h-[1px] bg-gray-300 mb-6'></div>
 
-      {/* Applications Table */}
       {applications.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-[#373737] text-lg">No applications received yet.</p>
@@ -223,24 +217,12 @@ const CheckApplications = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applicant
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Faculty
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Course
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applied Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applicant</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Faculty</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applied Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -264,9 +246,12 @@ const CheckApplications = () => {
                         )}
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <Link
+                          to={`/organiser/applicantsprofile?userid=${application.users?.userid}`}
+                          className="text-sm font-medium text-blue-600 hover:underline"
+                        >
                           {application.users?.username || 'Unknown User'}
-                        </div>
+                        </Link>
                       </div>
                     </div>
                   </td>
