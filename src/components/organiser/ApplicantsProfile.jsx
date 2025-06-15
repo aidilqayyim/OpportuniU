@@ -136,24 +136,7 @@ const Profile = () => {
             <h2 className="text-xl font-bold text-gray-800">Description</h2>
           </div>
           <div className="text-gray-700">
-            {isEditingDescription ? (
-              <>
-                <textarea
-                  rows="4"
-                  className="w-full border rounded p-2"
-                  value={descriptionInput}
-                  onChange={(e) => setDescriptionInput(e.target.value)}
-                />
-                <button
-                  onClick={handleDescriptionSave}
-                  className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                  Save Description
-                </button>
-              </>
-            ) : (
               <p className="whitespace-pre-wrap">{userData.userdescription || 'No description provided.'}</p>
-            )}
           </div>
         </div>
 
