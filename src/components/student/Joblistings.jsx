@@ -12,7 +12,7 @@ const Joblistings = () => {
   const [sortBy, setSortBy] = useState('relevance');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('both');
+  const [type, setType] = useState('all');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 6;
@@ -30,13 +30,11 @@ const Joblistings = () => {
     return `in ${futureDays} day${futureDays > 1 ? 's' : ''}`;
   };
 
-  // Helper: capitalize first letter
   const capitalizeFirstLetter = (str) => {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  // Fetch events with filters and pagination
   const fetchEvents = async () => {
     setLoading(true);
 
@@ -46,26 +44,29 @@ const Joblistings = () => {
         .select('*', { count: 'exact' })
         .range((page - 1) * pageSize, page * pageSize - 1);
 
-      // Apply keyword filter
       if (keywords.trim() !== '') {
         query = query.ilike('eventname', `%${keywords.trim()}%`);
       }
 
-      // Apply type filtering
-      if (type.toLowerCase() === 'program') {
-        query = query.ilike('type', 'program');
-      } else if (type.toLowerCase() === 'job') {
-        query = query.or('type.ilike.part-time,type.ilike.full-time');
+      if (type.toLowerCase() !== 'all') {
+        const typeMapping = {
+          'part-time': 'Part-Time',
+          'full-time': 'Full-Time',
+          'one-time': 'One-Time',
+          'program': 'Program',
+          'volunteer': 'Volunteer',
+          'competition': 'Competition',
+          'workshop': 'Workshop'
+        };
+        const mappedType = typeMapping[type.toLowerCase()] || capitalizeFirstLetter(type);
+        query = query.ilike('type', mappedType);
       }
-      // If 'both', no filtering on type (show all)
 
-      // Apply sorting
       if (sortBy === 'newest') {
         query = query.order('timecreated', { ascending: false });
       } else if (sortBy === 'oldest') {
         query = query.order('timecreated', { ascending: true });
       } else {
-        // Default relevance sorting - you might want to adjust this based on your needs
         query = query.order('eventdate', { ascending: false });
       }
 
@@ -88,32 +89,27 @@ const Joblistings = () => {
     }
   };
 
-  // Handle sort button click
-  const handleSortClick = () => {
-    setPage(1);
-    fetchEvents();
-  };
-
-  // Fetch events when page changes
-  useEffect(() => {
-    fetchEvents();
-  }, [page]);
-
-  // Fetch events when component mounts with initial keywords
-  useEffect(() => {
-    if (initialKeywords) {
-      fetchEvents();
-    }
-  }, [initialKeywords]);
-
-  // Handle search form submission
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1);
     fetchEvents();
   };
 
-  // Pagination handlers
+  const handleSortClick = () => {
+    setPage(1);
+    fetchEvents();
+  };
+
+  useEffect(() => {
+    if (initialKeywords.trim() !== '') {
+      fetchEvents();
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [page, type, sortBy]);
+
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
   };
@@ -147,9 +143,14 @@ const Joblistings = () => {
                 onChange={(e) => setType(e.target.value)}
                 className="my-1 h-11 w-full px-5 pr-10 rounded-md border border-gray-300 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#56bb7c]"
               >
-                <option value="both">Both</option>
+                <option value="all">All</option>
+                <option value="part-time">Part-Time</option>
+                <option value="full-time">Full-Time</option>
+                <option value="one-time">One-Time</option>
                 <option value="program">Program</option>
-                <option value="job">Job</option>
+                <option value="volunteer">Volunteer</option>
+                <option value="competition">Competition</option>
+                <option value="workshop">Workshop</option>
               </select>
               <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
             </div>
@@ -165,112 +166,87 @@ const Joblistings = () => {
         </form>
       </div>
 
-      {/* Listing Section */}
+      {/* Results Section */}
       <div className='w-full h-auto bg-white lg:px-40 md:px-20 sm:px-10 px-4 py-8 flex flex-col items-center'>
         <div className='w-full h-auto'>
           <h1 className='font-semibold text-[#373354] text-2xl mb-3'>Jobs/Program Listing</h1>
         </div>
 
         <div className='flex flex-col lg:flex-row w-full h-auto gap-6'>
-          {/* Listing */}
+          {/* Listings */}
           <div className='flex flex-col flex-1 gap-y-4'>
             <div className="w-full h-[1px] bg-gray-300 self-stretch mb-2"></div>
-            {loading && (
+            {loading ? (
               <div className="flex justify-center items-center py-8">
                 <p className="text-[#373354]">Loading...</p>
               </div>
-            )}
-            {!loading && events.length === 0 && (
+            ) : events.length === 0 ? (
               <div className="flex justify-center items-center py-8">
                 <p className="text-[#909596]">No results found.</p>
               </div>
-            )}
-            {!loading && events.map((event) => (
-              <Link
-                to={`/jobdesc?eventid=${event.eventid}`}
-                key={event.eventid}
-                className='bg-transparent hover:bg-[#373354] hover:text-white text-[#373354] rounded-lg px-4 py-4 duration-200 text-sm sm:text-base w-full cursor-pointer border-[3px] border-gray-200 hover:border-[#373354]'
-              >
-                <div className='flex flex-col gap-y-2'>
-                  <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start gap-y-2'>
-                    <p className='text-[#909596] font-medium text-base sm:text-lg hover:text-gray-300 flex-shrink-0'>
-                      {event.location || 'Location not specified'}
-                    </p>
-                    <div className='flex gap-x-2 flex-wrap justify-start sm:justify-end'>
-                      {(event.type && (event.type.toLowerCase() === 'part-time' || event.type.toLowerCase() === 'full-time')) ? (
-                        <>
-                          {event.pay && (
-                            <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2 whitespace-nowrap'>
-                              RM {event.pay}
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <>
+            ) : (
+              events.map((event) => (
+                <Link
+                  to={`/jobdesc?eventid=${event.eventid}`}
+                  key={event.eventid}
+                  className='bg-transparent hover:bg-[#373354] hover:text-white text-[#373354] rounded-lg px-4 py-4 duration-200 text-sm sm:text-base w-full cursor-pointer border-[3px] border-gray-200 hover:border-[#373354]'
+                >
+                  <div className='flex flex-col gap-y-2'>
+                    <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start gap-y-2'>
+                      <p className='text-[#909596] font-medium text-base sm:text-lg flex-shrink-0'>
+                        {event.location || 'Location not specified'}
+                      </p>
+                      <div className='flex gap-x-2 flex-wrap justify-start sm:justify-end'>
+                        {(event.type?.toLowerCase() === 'part-time' || event.type?.toLowerCase() === 'full-time') && event.pay && (
                           <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2 whitespace-nowrap'>
-                            {event.merit === true ? 'Merit Provided' : 'Merit Not Provided'}
+                            RM {event.pay}
                           </div>
-                        </>
-                      )}
-                      {event.type && (
-                        <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2 whitespace-nowrap'>
-                          {capitalizeFirstLetter(event.type)}
-                        </div>
-                      )}
+                        )}
+                        {event.type?.toLowerCase() !== 'part-time' && event.type?.toLowerCase() !== 'full-time' && (
+                          <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2 whitespace-nowrap'>
+                            {event.merit ? 'Merit Provided' : 'Merit Not Provided'}
+                          </div>
+                        )}
+                        {event.type && (
+                          <div className='bg-[#fff8f4] h-[30px] rounded-sm text-sm flex items-center text-[#FA5C00] px-2 whitespace-nowrap'>
+                            {capitalizeFirstLetter(event.type)}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <h1 className='font-semibold text-xl sm:text-2xl mt-2 line-clamp-2'>
-                  {event.eventname || 'Event name not available'}
-                </h1>
-                <p className='text-[#909596] mt-2 sm:text-base text-xs hover:text-gray-300'>
-                  {getRelativeTime(event.timecreated)}
-                </p>
-                <p className='mt-3 text-[11px] sm:text-sm text-gray-700 hover:text-gray-300 line-clamp-3'>
-                  {event.description || 'No description available'}
-                </p>
-              </Link>
-            ))}
+                  <h1 className='font-semibold text-xl sm:text-2xl mt-2 line-clamp-2'>
+                    {event.eventname || 'Event name not available'}
+                  </h1>
+                  <p className='text-[#909596] mt-2 sm:text-base text-xs'>
+                    {getRelativeTime(event.timecreated)}
+                  </p>
+                  <p className='mt-3 text-[11px] sm:text-sm text-gray-700 line-clamp-3'>
+                    {event.description || 'No description available'}
+                  </p>
+                </Link>
+              ))
+            )}
           </div>
 
-          {/* Sidebar Filter */}
+          {/* Sidebar */}
           <div className="lg:block lg:w-[20%] w-full">
             <p className='text-[#909596]'>SORT BY</p>
             <div className='w-full bg-gray-300 h-[1.2px] my-3'></div>
             <div className='flex flex-col gap-y-3'>
-              <label className="inline-flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="sortby"
-                  value="relevance"
-                  className="form-radio text-[#56bb7c] focus:ring-[#56bb7c]"
-                  checked={sortBy === 'relevance'}
-                  onChange={(e) => setSortBy(e.target.value)}
-                />
-                <span>Relevance</span>
-              </label>
-              <label className="inline-flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="sortby"
-                  value="newest"
-                  className="form-radio text-[#56bb7c] focus:ring-[#56bb7c]"
-                  checked={sortBy === 'newest'}
-                  onChange={(e) => setSortBy(e.target.value)}
-                />
-                <span>Newest</span>
-              </label>
-              <label className="inline-flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="sortby"
-                  value="oldest"
-                  className="form-radio text-[#56bb7c] focus:ring-[#56bb7c]"
-                  checked={sortBy === 'oldest'}
-                  onChange={(e) => setSortBy(e.target.value)}
-                />
-                <span>Oldest</span>
-              </label>
+              {['relevance', 'newest', 'oldest'].map(option => (
+                <label key={option} className="inline-flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="sortby"
+                    value={option}
+                    checked={sortBy === option}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="form-radio text-[#56bb7c] focus:ring-[#56bb7c]"
+                  />
+                  <span className="capitalize">{option}</span>
+                </label>
+              ))}
               <div className='w-full flex items-center justify-center'>
                 <button
                   type="button"

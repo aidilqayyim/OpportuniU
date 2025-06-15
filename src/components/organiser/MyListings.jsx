@@ -63,13 +63,7 @@ const MyListings = () => {
     if (keywords.trim() !== '') {
       query = query.ilike('eventname', `%${keywords.trim()}%`);
     }
-
-    if (type.toLowerCase() === 'program') {
-      query = query.ilike('type', 'program');
-    } else if (type.toLowerCase() === 'job') {
-      query = query.or('type.ilike.part-time,type.ilike.full-time');
-    }
-
+      
     if (sortBy === 'newest') {
       query = query.order('timecreated', { ascending: false });
     } else if (sortBy === 'oldest') {

@@ -3,6 +3,7 @@ import { supabase } from '../../supabaseClient';
 import { UserAuth } from '../../context/AuthContext';
 import model3 from '../../assets/model3.jpg';
 import { FaUser, FaEnvelope, FaPhone, FaPen } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { session } = UserAuth();
@@ -121,9 +122,6 @@ const Profile = () => {
     });
   };
 
-  const handleEventClick = (eventid) => {
-    window.location.href = `/organiser/jobdesc?eventid=${eventid}`;
-  };
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 relative">
@@ -254,12 +252,12 @@ const Profile = () => {
                   myEvents.map((event) => (
                     <tr key={event.eventid}>
                       <td className="px-6 py-4 text-sm">
-                        <button
-                          onClick={() => handleEventClick(event.eventid)}
+                        <Link
+                          to={`/organiser/jobdesc?eventid=${event.eventid}`}
                           className="text-gray-800 hover:text-blue-600 cursor-pointer transition-colors duration-200"
                         >
                           {event.eventname || 'Unknown'}
-                        </button>
+                        </Link>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">{event.type || 'N/A'}</td>
                       <td className="px-6 py-4 text-sm text-gray-600">{formatDate(event.timecreated)}</td>
